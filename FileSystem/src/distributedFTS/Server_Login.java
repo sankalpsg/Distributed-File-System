@@ -1,6 +1,3 @@
-/**
- * 
- */
 package distributedFTS;
 
 /**
@@ -9,69 +6,62 @@ package distributedFTS;
  */
 
 import java.io.*;
-import java.nio.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.*;
 import java.sql.Statement;
 import java.util.*;
-import java.util.stream.Stream;
-
-import javax.ws.*;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 
-import java.security.Key;
-import org.apache.catalina.connector.Response;
 
+// Secure Login Request is Processed
 @Path("/fts")
-public class Server_Login {
+public class Server_Login 
+{
 	@POST
 	@Consumes({"application/json"})
 	@Path("/signIn")
-	public String create(String param1){
+	public String login(String input){
 
-		System.out.println("param1 = " + param1);
 
-		Request_Login lr = new Request_Login();
-		lr = lr.getClassFromJson(param1);
+		Request_Login lrequest = new Request_Login();
+		lrequest = lrequest.getClassFromJson(input);
 
-		String client_username = lr.getUsername();
-		String client_password = lr.getPassword();
+		String client_uname = lrequest.getUname();
+		String client_passwd = lrequest.getPasswd();
 
 
 		Response_Login lresponse = new Response_Login();
-
+		
+		// Authenticating the login user 
 		try
 
 		{
 
-			Connection conn = ConnectionDao.sqlconnect(); 
-
-			Statement stmt=conn.createStatement();  
-			ResultSet rs=stmt.executeQuery("select fname,usertype,token,pswd from users where encrypt_username = '" + client_username +"';");
+			Connection connect = ConnectionDao.sqlconnect(); 
+			Statement stmt=connect.createStatement();  
+			ResultSet rs=stmt.executeQuery("select fname,usertype,token,pswd from users where encrypt_username = '" + client_uname +"';");
 
 			if(rs.next())
 			{
 
-
-				if(rs.getString(4).equals(Cryption.decrypt(client_password, rs.getString(4))))
+				// If username gets Authenicated, token and key 1 is sent to client as response
+				if(rs.getString(4).equals(Cryption.decrypt(client_passwd, rs.getString(4))))
 				{
-					lresponse.setAuthstatus("Y");
-					lresponse.setName(rs.getString(1));
-					lresponse.setUsertype(rs.getString(2));
+					lresponse.setStatus("Y");
+					lresponse.setFullname(rs.getString(1));
+					lresponse.setUser_type(rs.getString(2));
 					lresponse.setToken(rs.getString(3));
 					
-					 String key1 = Cryption.getNewKey();
-					 String key2 = Cryption.getNewKey();
+					 String key1 = Cryption.getInitialKey();
+					 String key2 = Cryption.getInitialKey();
 					 String time = String.valueOf(System.currentTimeMillis());
-					 String myToken = lresponse.getName() + ";;" + key1 + ";;" + time;
+					 String myToken = lresponse.getFullname() + ";;" + key1 + ";;" + time;
 					
 					 lresponse.setToken(Cryption.encrypt(myToken,key2));
 					 lresponse.setKey1(key1);
-					 String query = "update users set key1 = ?, key2 = ?, token = ? where encrypt_username = '" + client_username +"';  ";
-				        PreparedStatement preparedStmt = conn.prepareStatement(query);
+					 String query = "update users set key1 = ?, key2 = ?, token = ? where encrypt_username = '" + client_uname +"';  ";
+				        PreparedStatement preparedStmt = connect.prepareStatement(query);
 				        preparedStmt.setString (1, key1);
 				        preparedStmt.setString (2, key2);
 				        preparedStmt.setString (3, lresponse.getToken());
@@ -82,11 +72,9 @@ public class Server_Login {
 
 			}
 
-
-			lresponse.setAuthstatus("N");
-
-
-			conn.close();  
+			// Authentication gets rejected and the Status is sent as N
+			lresponse.setStatus("N");
+			connect.close();  
 		}
 
 		catch(Exception e)
@@ -99,105 +87,75 @@ public class Server_Login {
 		return lresponse.getJsonString();
 	}
 
-	@POST
-	@Consumes({"application/json"})
-	@Path("/fileRead")
-	public void file_read(String param1) throws IOException {
-		System.out.println("Execution of File read start here!");
-
-		Request_Login lr = new Request_Login();
-		lr = lr.getClassFromJson(param1);
-		String filename = lr.getFilename();
-		System.out.println("filename entered is"+filename);
-		//read file into stream, try-with-resources
-		try (Stream<String> stream = Files.lines(Paths.get(filename))) {
-
-			stream.forEach(System.out::println);
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-
-	}
-
-	@POST
-	@Consumes({"application/json"})
-	@Path("/fileWrite")
-	public void file_write() {
-
-
-	}
+	
+	// Authentication of the token
 	
 	@POST
 	@Consumes({"application/json"})
 	@Path("/tokenCheck")
-	public String tokenCheck(String param){
+	public String tokenCheck(String input){
 		
-		Request_Token tr = new Request_Token();
-		tr = tr.getClassFromJson(param);
+		Request_Token tk_request = new Request_Token();
+		tk_request = tk_request.getClassFromJson(input);
 		
-		String client_username = tr.getEncryptedUsername();
-
-		String client_token = tr.getToken();
+		String client_uname = tk_request.getUserName_Encrypted();
+		String client_token = tk_request.getToken();
 		
-		System.out.println("username is "+client_username);
+		System.out.println("username is "+client_uname);
 		System.out.println("token is "+client_token);
 
 		Response_Token tresponse = new Response_Token();
-	
-				
-		
-		Connection conn = ConnectionDao.sqlconnect();
-		try {
-		Statement stmt=conn.createStatement();  
-			
-			ResultSet rs=stmt.executeQuery("select token,key2,key1 from users where token = '" + client_token +"' and encrypt_username = '" + client_username +"';");
-		
+		Connection connect = ConnectionDao.sqlconnect();
+		try 
+		{
+			Statement stmt=connect.createStatement();  
+			ResultSet rs=stmt.executeQuery("select token,key2,key1 from users where token = '" + client_token +"' and encrypt_username = '" + client_uname +"';");
 		
 		if(rs.next())
 		{
 			client_token = Cryption.decrypt(client_token, rs.getString(2));
 			StringTokenizer st = new StringTokenizer(client_token,";;");
 			String ds_ttl = new String();
-			String ttl = new String();
-		     while (st.hasMoreTokens()) {  
-		    	     ds_ttl = st.nextToken();  
-		     }
-		     long a = Long.parseLong(ds_ttl);
-		     System.out.println(""+a);
-		     long b = System.currentTimeMillis();
+			while (st.hasMoreTokens()) 
+		    {  
+		    	 ds_ttl = st.nextToken();  
+		    }
+		     
+		    long a = Long.parseLong(ds_ttl);
+		    System.out.println(""+a);
+		    long b = System.currentTimeMillis();
 		    
-		     if(b - a <= 300000)
-		     {
-		    	tresponse.setAuthstatus("Y");
+		    if(b - a <= 300000)
+		    {
+		    	tresponse.setStatus("Y");
 		 		tresponse.setKey1(rs.getString(3));
 		 		return tresponse.getJsonString();
-		     }
+		    }
 			
 				
 		}			
 		
-		tresponse.setAuthstatus("N");
-		
+		tresponse.setStatus("N");
 		return tresponse.getJsonString();	
 		
-		} catch (SQLException e) {
+		} 
+		catch (SQLException e) 
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			
-		} catch (UnsupportedEncodingException e) {
+		} 
+		catch (UnsupportedEncodingException e) 
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		
-		tresponse.setAuthstatus("N");
+		tresponse.setStatus("N");
 		return tresponse.getJsonString();
 
 
 	}	
-
 
 }
 

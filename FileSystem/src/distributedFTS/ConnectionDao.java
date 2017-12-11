@@ -4,25 +4,31 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class ConnectionDao {
+// Connection to get data access from database
+public class ConnectionDao 
+{
 	
-	public static Connection sqlconnect() {
-		Connection con= null;
-	try {
+	public static Connection sqlconnect() 
+	{
+		Connection connect= null;
+	try 
+	{
 		Class.forName("com.mysql.jdbc.Driver");
-	
-		 con=DriverManager.getConnection(  
-				"jdbc:mysql://localhost:3306/fileserver","root","Prashant123!");
+	    connect=DriverManager.getConnection(  
+				"jdbc:mysql://localhost:3306/loginserver","root","Dublin12*");
 	} 
 	
-	catch (ClassNotFoundException e) {
+	catch (ClassNotFoundException e) 
+	{
 		// TODO Auto-generated catch block
 		e.printStackTrace();
-	} catch (SQLException e) {
+	} 
+	catch (SQLException e) 
+	{
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
-	return con;
+	return connect;
 	}
 
 }
