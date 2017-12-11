@@ -4,50 +4,50 @@
 package distributedFTS;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
-public class Response_Login 
-{
+public class Response_Login {
 	String name;
 	String token;
 	String authstatus;
 	String usertype;
-	public String getUsertype() 
-	{
+	String key1;
+	
+	public String getKey1() {
+		return key1;
+	}
+	public void setKey1(String key1) {
+		this.key1 = key1;
+	}
+	public String getUsertype() {
 		return usertype;
 	}
-	public void setUsertype(String usertype) 
-	{
+	public void setUsertype(String usertype) {
 		this.usertype = usertype;
 	}
-	public String getName() 
-	{
+	public String getName() {
 		return name;
 	}
-	public void setName(String name) 
-	{
+	public void setName(String name) {
 		this.name = name;
 	}
-	public String getToken() 
-	{
+	public String getToken() {
 		return token;
 	}
-	public void setToken(String token) 
-	{
+	public void setToken(String token) {
 		this.token = token;
 	}
-	public String getAuthstatus() 
-	{
+	public String getAuthstatus() {
 		return authstatus;
 	}
-	public void setAuthstatus(String authstatus) 
-	{
+	public void setAuthstatus(String authstatus) {
 		this.authstatus = authstatus;
 	}
 	
 	public String getJsonString()
 	{
-		Gson gson = new Gson();
-		String ResponseLogin = gson.toJson(this);
-		return ResponseLogin;
+		Gson gson = new GsonBuilder().disableHtmlEscaping().create(); 
+		String loginResponse = gson.toJson(this);
+		return loginResponse;
 	}
 }

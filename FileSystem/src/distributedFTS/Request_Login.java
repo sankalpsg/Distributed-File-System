@@ -1,9 +1,7 @@
-/**
- * 
- */
 package distributedFTS;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class Request_Login {
 	String username;
@@ -43,11 +41,10 @@ public class Request_Login {
 
 	public Request_Login getClassFromJson(String param)
 	{
-		Gson gson = new Gson();
-		Request_Login loginRequest = gson.fromJson(param,Request_Login.class);
-		return loginRequest;
+		Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+		Request_Login lr = gson.fromJson(param,Request_Login.class);
+		return lr;
+		
 	}
 	
- }
-
-
+}
