@@ -1,35 +1,42 @@
 package locking;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 public class Response_AuthServer {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+	String authstatus;
+	String key1;
 
+
+	public String getAuthstatus() {
+		return authstatus;
 	}
 
-	public void setLockstatus(String string) {
-		// TODO Auto-generated method stub
+
+
+	public void setAuthstatus(String authstatus) {
+		this.authstatus = authstatus;
+	}
+
+
+	public String getKey1() {
+		return key1;
+	}
+
+
+	public void setKey1(String key1) {
+		this.key1 = key1;
+	}
+
+
+	public Response_AuthServer getClassFromJson(String input)
+	{
+		Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+		Response_AuthServer response_AuthServer = gson.fromJson(input,Response_AuthServer.class);
+		return response_AuthServer;
 		
 	}
 
-	public String getJsonString() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public String getAuthstatus() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Response_AuthServer getClassFromJson(String resp) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public String getKey1() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

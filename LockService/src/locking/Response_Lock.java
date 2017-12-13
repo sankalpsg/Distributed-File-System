@@ -1,20 +1,43 @@
 package locking;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 public class Response_Lock {
-
-	public String getJsonString() {
-		// TODO Auto-generated method stub
-		return null;
+	
+	String token;
+	String encrypted_Username;
+	/**
+	 * @return the token
+	 */
+	
+	public String getToken() {
+		return token;
 	}
-
-	public void setEncryptedUsername(String client_username) {
-		// TODO Auto-generated method stub
-		
+	/**
+	 * @param token the token to set
+	 */
+	public void setToken(String token) {
+		this.token = token;
 	}
-
-	public void setToken(String client_token) {
-		// TODO Auto-generated method stub
-		
+	/**
+	 * @return the encrypted_Username
+	 */
+	public String getEncrypted_Username() {
+		return encrypted_Username;
 	}
-
+	/**
+	 * @param encrypted_Username the encrypted_Username to set
+	 */
+	public void setEncrypted_Username(String encrypted_Username) {
+		this.encrypted_Username = encrypted_Username;
+	}
+	
+	public String getJsonString()
+	{
+		Gson gson = new GsonBuilder().disableHtmlEscaping().create(); 
+		String lockresponse = gson.toJson(this);
+		return lockresponse;
+	}
+	
 }

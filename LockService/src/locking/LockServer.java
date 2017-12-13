@@ -26,14 +26,14 @@ public class LockServer
 		Request_Lock lrequest = new Request_Lock();
 		lrequest = lrequest.getClassFromJson(input);
 
-		String client_username = lrequest.getUsername();
+		String client_username = lrequest.getUname();
 		String client_filename = lrequest.getFilename();
 		String client_email = lrequest.getEmail();
 		String client_token = lrequest.getToken();
 		
 		Response_Lock lresponse = new Response_Lock();
 		lresponse.setToken(client_token);
-		lresponse.setEncryptedUsername(client_username);
+		lresponse.setEncrypted_Username(client_username);
 		String jsonstr = lresponse.getJsonString();
 		ConnectingAuthServer con = new ConnectingAuthServer();
 		
@@ -51,68 +51,163 @@ public class LockServer
 		System.out.println("client_email value is"+client_email);
 		System.out.println("key1 value is"+key1);
 		
-		String decrypt_client_filename = Cryption.decrypt(client_filename, key1);
-		String decrypt_client_email = Cryption.decrypt(client_email, key1);
-		String decrypt_client_username = Cryption.decrypt(client_username, key1);
-		
+	
+
 		String auth = rfas.getAuthstatus();
 		Connection conn = ConnectionDao.sqlconnect();
 		Response_Client rtc = new Response_Client();
 		
+		// If the user is Authorized, check whether the file is accessible
 		
 		if (auth.equals("Y"))
 		{
+			String decrypt_client_filename = Cryption.decrypt(client_filename, key1);
+			String decrypt_client_email = Cryption.decrypt(client_email, key1);
 			
 			Statement stmt=conn.createStatement();  
 			ResultSet rs=stmt.executeQuery("select locked from lookup where filename = '" + decrypt_client_filename +"';");
 			if(rs.next())
 			{
-				if(rs.getString(1).equals("Y"))
+				if(rs.getString(1).equals("Y")) // If the file is locked.
 				{
-					rtc.setLockstatus("N");
+					rtc.setWriteStatus("N");
 					
 					reply= rtc.getJsonString();
 					
 				}
-				else 
-				{
+				else                  // If the file is not locked.
+				{  			
 					String query = "update lookup set locked = 'Y' where filename = '" + decrypt_client_filename +"';  ";
 			        PreparedStatement preparedStmt = conn.prepareStatement(query);
 			        preparedStmt.execute();
-			        rtc.setLockstatus("Y");
+			        rtc.setWriteStatus("Y");
 			        reply=  rtc.getJsonString();
 				}
 				
 			}
-			else
+			else          // IF the file is not present, add the file.
 			{
 				String query = " insert into lookup values (?,?,?,'Y')";
 		        PreparedStatement preparedStmt = conn.prepareStatement(query);
-		        preparedStmt.setString (1, decrypt_client_username);
+		        preparedStmt.setString (1, client_username);
 		        preparedStmt.setString (2, decrypt_client_filename);
 		        preparedStmt.setString (3, decrypt_client_email);
 		        preparedStmt.execute();
-		        rtc.setLockstatus("Y");
+		        rtc.setWriteStatus("Y");
 		        reply=  rtc.getJsonString();
 				
 			}
 			
 			
 		}
-		else
+		else // If the user is not authorized
 		{	
-			rtc.setAuthstatus("N");
+			rtc.setAuthStatus("N");
 			reply=  rtc.getJsonString();
 		}
-		}catch(SQLException sq) {
+		
+		}
+		
+		catch(SQLException sq) 
+		{
 			System.out.println("Exception in LockServer Select Lookup");
 			sq.printStackTrace();
 			
-		} catch (UnsupportedEncodingException e) {
+		} 
+		
+		catch (UnsupportedEncodingException e) 
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return reply;
 			
 	}
+	
+	
+	@POST
+	@Consumes({"application/json"})
+	@Path("/releaseLock")
+	public String release(String input)
+	{
+		
+		AuthServerProperties.import_Properties();
+		String reply = null;
+		
+		Request_Lock lrequest = new Request_Lock();
+		lrequest = lrequest.getClassFromJson(input);
+
+		String client_filename = lrequest.getFilename();
+		String client_username = lrequest.getUname();
+		String client_token = lrequest.getToken();
+		
+		Response_Lock lresponse = new Response_Lock();
+		lresponse.setToken(client_token);
+		lresponse.setEncrypted_Username(client_username);
+		String jsonstr = lresponse.getJsonString();
+		ConnectingAuthServer cas = new ConnectingAuthServer();
+		
+		String resp = cas.sendAuthRequest(jsonstr);
+		Response_AuthServer rfas = new Response_AuthServer();
+		rfas=rfas.getClassFromJson(resp);
+		
+		String key1 = rfas.getKey1();
+		
+		try {
+						
+			String auth = rfas.getAuthstatus();
+			Connection conn = ConnectionDao.sqlconnect();
+			Response_Client rtc = new Response_Client();
+			if (auth.equals("Y"))
+			{
+				String decrypt_client_filename = Cryption.decrypt(client_filename, key1);
+				Statement stmt=conn.createStatement();
+				
+				ResultSet rs=stmt.executeQuery("select locked from lookup where filename = '" + decrypt_client_filename +"';");
+				if(rs.next())
+				{
+					String query = "update lookup set locked = 'N' where filename = '" + decrypt_client_filename +"';  ";
+			        PreparedStatement preparedStmt = conn.prepareStatement(query);
+			        preparedStmt.execute();
+			        rtc.setReleaseStatus("0");
+			        reply=  rtc.getJsonString();
+				}
+				
+				else
+				{
+					rtc.setReleaseStatus("0");
+			        reply=  rtc.getJsonString();
+				}
+				
+				
+			}
+			
+			else
+			{	
+				rtc.setAuthStatus("N");
+				reply=  rtc.getJsonString();
+			}
+				
+						
+		}
+		
+		catch(SQLException sq) 
+		{			
+			System.out.println("Exception in release lock in LockService"+sq);
+			sq.printStackTrace();
+			Response_Client rtc = new Response_Client();
+			rtc.setReleaseStatus("1");
+	        reply=  rtc.getJsonString();
+			
+		} 
+		
+		catch (UnsupportedEncodingException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return reply;
+	}
+
 }

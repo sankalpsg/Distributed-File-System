@@ -1,18 +1,18 @@
 package locking;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-
 import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.protocol.HTTP;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+
+
 
 
 
@@ -65,9 +65,13 @@ public class ConnectingAuthServer {
 	}
 
 
-	public String sendAuthRequest(String jsonstr) {
-		// TODO Auto-generated method stub
-		return null;
+	public String sendAuthRequest(String input) 
+	{
+	
+		String server_ip = AuthServerProperties.Url_IP + AuthServerProperties.Url_path;
+		String type = "AuthRequest";
+		return connection(server_ip,input,type);
+
 	}
 	
 
