@@ -3,19 +3,23 @@ package clientserver;
 import java.io.IOException;
 import java.util.Properties;
 
-public  class UrlProperty {
-
-	public static String serverUrl;
-	public static String directoryServerUrl;
+public  class UrlProperty 
+{
 	public static String loginUrl;
 	public static String readfileUrl;
-	public static String directoryinfoUrl;
+	public static String directoryinfo_Url;
+	public static String serverUrl;
+	public static String directoryServerUrl;
+	public static String writefileUrl;
 	public static String lockServerUrl;
 	public static String lockingUrl;
+	public static String cache_Time;
 
-	public static void import_Properties() {
+	public static void import_Properties() 
+	{
 		Properties config = new Properties();
-		try {
+		try 
+		{
 			config.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("config.properties"));
 			
 			
@@ -23,12 +27,17 @@ public  class UrlProperty {
 			directoryServerUrl = config.getProperty("directoryServerUrl");
 			loginUrl = config.getProperty("loginUrl");
 			readfileUrl = config.getProperty("readfileUrl");
-			directoryinfoUrl = config.getProperty("directoryinfoUrl");
+			directoryinfo_Url = config.getProperty("directoryinfo_Url");
+			writefileUrl = config.getProperty("writefileUrl");
+			cache_Time = config.getProperty("cache_Time");
 			lockServerUrl = config.getProperty("lockServerUrl");
 			lockingUrl = config.getProperty("lockingUrl");
 			
-		} catch (IOException e) {
-			System.out.println("Failed to load property file"+e);
+		} 
+		
+		catch (IOException e) 
+		{
+			System.out.println("Failed to import the property file"+e);
 		}
 	}
 }

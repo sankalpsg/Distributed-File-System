@@ -41,14 +41,8 @@ public class Login extends HttpServlet
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		Request_Login loginRequest= new Request_Login();
-		//loginRequest.setUsername((String) request.getParameter("u"));
 		loginRequest.setUsername(EncryptDecrypt.encrypt((String) request.getParameter("u"), (String) request.getParameter("p")));
-		//String encryp = EncryptDecrypt.encrypt((String) request.getParameter("p"), (String) request.getParameter("p"));
-		//String decryp = EncryptDecrypt.decrypt(encryp, (String) request.getParameter("p"));
-		
-		
 		loginRequest.setPassword(EncryptDecrypt.encrypt((String) request.getParameter("p"), (String) request.getParameter("p")));
 		String reply = sf.sendLoginRequest(loginRequest.getJsonString());
 		Response_Login lResponse = new Response_Login();
@@ -61,6 +55,8 @@ public class Login extends HttpServlet
 			request.getSession().setAttribute("key1", lResponse.getKey1());
 			request.getSession().setAttribute("usernamenc", loginRequest.getUsername());
 			request.getRequestDispatcher("welcome.jsp").forward(request, response);
+			request.getSession().setAttribute("message", "");
+			request.getSession().setAttribute("status", "");
 		}
 		
 		else 

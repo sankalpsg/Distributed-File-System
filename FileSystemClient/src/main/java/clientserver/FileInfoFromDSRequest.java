@@ -3,11 +3,13 @@ package clientserver;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-public class FileInfoFromDSRequest {
+public class FileInfoFromDSRequest 
+{
 
 	String token;
 	String filename;
 	String uname_Encrypted;
+	String Operatn;
 	
 	public String getUname_Encrypted() 
 	{
@@ -18,6 +20,16 @@ public class FileInfoFromDSRequest {
 	{
 		this.uname_Encrypted = uname_Encrypted;
 	}
+	public String getOperatn() 
+	{
+		return Operatn;
+	}
+
+	public void setOperatn(String operatn) 
+	{
+		Operatn = operatn;
+	}
+
 	/**
 	 * @return the token
 	 */
