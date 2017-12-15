@@ -5,44 +5,44 @@ import com.google.gson.GsonBuilder;
 
 public class Response_Client {
 
-	String writeStatus;
-	String authStatus;
-	String releaseStatus; 
+	String writestatus;
+	String authstatus;
+	String releasestatus; 
 	
 	
 
-	public String getWriteStatus() {
-		return writeStatus;
+	public String getWritestatus() {
+		return writestatus;
 	}
 
 
 
-	public void setWriteStatus(String writeStatus) {
-		this.writeStatus = writeStatus;
+	public void setWritestatus(String writestatus) {
+		this.writestatus = writestatus;
 	}
 
 
 
-	public String getAuthStatus() {
-		return authStatus;
+	public String getAuthstatus() {
+		return authstatus;
 	}
 
 
 
-	public void setAuthStatus(String authStatus) {
-		this.authStatus = authStatus;
+	public void setAuthstatus(String authstatus) {
+		this.authstatus = authstatus;
 	}
 
 
 
-	public String getReleaseStatus() {
-		return releaseStatus;
+	public String getReleasestatus() {
+		return releasestatus;
 	}
 
 
 
-	public void setReleaseStatus(String releaseStatus) {
-		this.releaseStatus = releaseStatus;
+	public void setReleasestatus(String releasestatus) {
+		this.releasestatus = releasestatus;
 	}
 
 

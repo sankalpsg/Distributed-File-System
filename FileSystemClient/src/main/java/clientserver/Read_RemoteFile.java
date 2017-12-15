@@ -40,7 +40,7 @@ public class Read_RemoteFile extends HttpServlet
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		String token = (String)request.getSession().getAttribute("token");
 		String key1 = (String)request.getSession().getAttribute("key1");
-		String uname_encrypt = (String)request.getSession().getAttribute("usernamenc");
+		String encryptedUsername = (String)request.getSession().getAttribute("usernamenc");
 		String filename = request.getParameter("fn");
 		
 		// Verify whether the file is in Cache or not
@@ -71,22 +71,22 @@ public class Read_RemoteFile extends HttpServlet
 			FileInfoFromDSRequest infoRequest = new FileInfoFromDSRequest();
 			infoRequest.setFilename(EncryptDecrypt.encrypt(filename, key1));
 			infoRequest.setToken(token);
-			infoRequest.setUname_Encrypted(uname_encrypt);
+			infoRequest.setEncryptedUsername(encryptedUsername);
 			String infoRequestJson = infoRequest.getJsonString();
 			String replyInfoRequest = sf.getDirectoryInfo(infoRequestJson);
 			FileInfoFromDSResponse fileInfoResponse = new FileInfoFromDSResponse();
 			fileInfoResponse=fileInfoResponse.getClassFromJsonString(replyInfoRequest);
 		
-			if(fileInfoResponse.getAuthStatus().equals("Y"))
+			if(fileInfoResponse.getAuthstatus().equals("Y"))
 			{
-				fileInfoResponse.setServer_IP(EncryptDecrypt.decrypt(fileInfoResponse.getServer_IP(),key1));
+				fileInfoResponse.setServerurl(EncryptDecrypt.decrypt(fileInfoResponse.getServerurl(),key1));
 				Request_Read readRequest = new Request_Read();
 				readRequest.setFilename(EncryptDecrypt.encrypt(filename, key1));
 				readRequest.setToken(token);
-				readRequest.setEncryptedUsername(uname_encrypt);
+				readRequest.setEncryptedUsername(encryptedUsername);
 				readRequest.setDirectory(fileInfoResponse.getDirectory());//This is also encrypted with key1
 				String jsonReadRequest = readRequest.getJsonString();
-				String readResponsereply = sf.sendReadRequest(jsonReadRequest,fileInfoResponse.getServer_IP());
+				String readResponsereply = sf.sendReadRequest(jsonReadRequest,fileInfoResponse.getServerurl());
 				Response_Read readResponse = new Response_Read();
 				readResponse = readResponse.getClassFromJsonString(readResponsereply);
 				String filecontent = EncryptDecrypt.decrypt(readResponse.getFilecontent(),key1);
@@ -108,9 +108,9 @@ public class Read_RemoteFile extends HttpServlet
 			{
 				System.out.println("Validation Failed");
 				request.getSession().setAttribute("status", "0");
-				if(fileInfoResponse.getAuthStatus()==null)
-					fileInfoResponse.setAuthStatus("");
-				request.getSession().setAttribute("message", fileInfoResponse.getAuthStatus());
+				if(fileInfoResponse.getAuthstatus()==null)
+					fileInfoResponse.setAuthstatus("");
+				request.getSession().setAttribute("message", fileInfoResponse.getAuthstatus());
 				request.getRequestDispatcher("readfile.jsp").forward(request, response);
 			}
 		}
@@ -121,7 +121,6 @@ public class Read_RemoteFile extends HttpServlet
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

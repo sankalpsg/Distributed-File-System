@@ -26,7 +26,7 @@ public class LockServer
 		Request_Lock lrequest = new Request_Lock();
 		lrequest = lrequest.getClassFromJson(input);
 
-		String client_username = lrequest.getUname();
+		String client_username = lrequest.getUsername();
 		String client_filename = lrequest.getFilename();
 		String client_email = lrequest.getEmail();
 		String client_token = lrequest.getToken();
@@ -70,7 +70,7 @@ public class LockServer
 			{
 				if(rs.getString(1).equals("Y")) // If the file is locked.
 				{
-					rtc.setWriteStatus("N");
+					rtc.setWritestatus("N");
 					
 					reply= rtc.getJsonString();
 					
@@ -80,7 +80,7 @@ public class LockServer
 					String query = "update lookup set locked = 'Y' where filename = '" + decrypt_client_filename +"';  ";
 			        PreparedStatement preparedStmt = conn.prepareStatement(query);
 			        preparedStmt.execute();
-			        rtc.setWriteStatus("Y");
+			        rtc.setWritestatus("Y");
 			        reply=  rtc.getJsonString();
 				}
 				
@@ -93,7 +93,7 @@ public class LockServer
 		        preparedStmt.setString (2, decrypt_client_filename);
 		        preparedStmt.setString (3, decrypt_client_email);
 		        preparedStmt.execute();
-		        rtc.setWriteStatus("Y");
+		        rtc.setWritestatus("Y");
 		        reply=  rtc.getJsonString();
 				
 			}
@@ -102,7 +102,7 @@ public class LockServer
 		}
 		else // If the user is not authorized
 		{	
-			rtc.setAuthStatus("N");
+			rtc.setAuthstatus("N");
 			reply=  rtc.getJsonString();
 		}
 		
@@ -138,7 +138,7 @@ public class LockServer
 		lrequest = lrequest.getClassFromJson(input);
 
 		String client_filename = lrequest.getFilename();
-		String client_username = lrequest.getUname();
+		String client_username = lrequest.getUsername();
 		String client_token = lrequest.getToken();
 		
 		Response_Lock lresponse = new Response_Lock();
@@ -169,13 +169,13 @@ public class LockServer
 					String query = "update lookup set locked = 'N' where filename = '" + decrypt_client_filename +"';  ";
 			        PreparedStatement preparedStmt = conn.prepareStatement(query);
 			        preparedStmt.execute();
-			        rtc.setReleaseStatus("0");
+			        rtc.setReleasestatus("0");
 			        reply=  rtc.getJsonString();
 				}
 				
 				else
 				{
-					rtc.setReleaseStatus("0");
+					rtc.setReleasestatus("0");
 			        reply=  rtc.getJsonString();
 				}
 				
@@ -184,7 +184,7 @@ public class LockServer
 			
 			else
 			{	
-				rtc.setAuthStatus("N");
+				rtc.setAuthstatus("N");
 				reply=  rtc.getJsonString();
 			}
 				
@@ -196,7 +196,7 @@ public class LockServer
 			System.out.println("Exception in release lock in LockService"+sq);
 			sq.printStackTrace();
 			Response_Client rtc = new Response_Client();
-			rtc.setReleaseStatus("1");
+			rtc.setReleasestatus("1");
 	        reply=  rtc.getJsonString();
 			
 		} 

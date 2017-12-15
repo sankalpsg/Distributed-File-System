@@ -6,7 +6,7 @@ import com.google.gson.GsonBuilder;
 public class Response_Lock {
 	
 	String token;
-	String encrypted_Username;
+	String encryptedUsername;
 	/**
 	 * @return the token
 	 */
@@ -20,17 +20,13 @@ public class Response_Lock {
 	public void setToken(String token) {
 		this.token = token;
 	}
-	/**
-	 * @return the encrypted_Username
-	 */
-	public String getEncrypted_Username() {
-		return encrypted_Username;
+	
+	public String getEncryptedUsername() {
+		return encryptedUsername;
 	}
-	/**
-	 * @param encrypted_Username the encrypted_Username to set
-	 */
-	public void setEncrypted_Username(String encrypted_Username) {
-		this.encrypted_Username = encrypted_Username;
+
+	public void setEncrypted_Username(String encryptedUsername) {
+		this.encryptedUsername = encryptedUsername;
 	}
 	
 	public String getJsonString()

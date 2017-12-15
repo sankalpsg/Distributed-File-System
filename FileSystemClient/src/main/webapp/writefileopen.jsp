@@ -232,7 +232,7 @@ input:focus {
 			String filecontent = (String) session.getAttribute("filecontent");
 		%>
 		<br>
-		<form method="post" id="usrform" action="/FileSystemClient/SendChangesForWrite">
+		<form method="post" id="usrform" action="/Client/SendChangesForWrite">
 			<textarea style="width: 100%; height: 100%; border: solif, medium;"
 				name='writebox' id='writebox' form="usrform"><%=filecontent%></textarea>
 			<button type="submit" class="btn btn-primary btn-block btn-large">Submit

@@ -6,50 +6,60 @@ import com.google.gson.GsonBuilder;
 public class FileInfoFromDSResponse 
 {
 
-	public String token;
-	public String authStatus;
-	public String server_IP;
-	public String directory;
-
-	public String getToken() 
-	{
+	public String getToken() {
 		return token;
 	}
 
-	public void setToken(String token) 
-	{
+
+
+	public void setToken(String token) {
 		this.token = token;
 	}
 
-	public String getAuthStatus() 
-	{
-		return authStatus;
+
+
+	public String getAuthstatus() {
+		return authstatus;
 	}
 
-	public void setAuthStatus(String authStatus) 
-	{
-		this.authStatus = authStatus;
+
+
+	public void setAuthstatus(String authstatus) {
+		this.authstatus = authstatus;
 	}
 
-	public String getServer_IP() 
-	{
-		return server_IP;
+
+
+	public String getServerurl() {
+		return serverurl;
 	}
 
-	public void setServer_IP(String server_IP) 
-	{
-		this.server_IP = server_IP;
+
+
+	public void setServerurl(String serverurl) {
+		this.serverurl = serverurl;
 	}
 
-	public String getDirectory() 
-	{
+
+
+	public String getDirectory() {
 		return directory;
 	}
 
-	public void setDirectory(String directory) 
-	{
+
+
+	public void setDirectory(String directory) {
 		this.directory = directory;
 	}
+
+
+
+	public String token;
+	public String authstatus;
+	public String serverurl;
+	public String directory;
+
+	
 
 	public FileInfoFromDSResponse getClassFromJsonString(String replyInString) 
 	{

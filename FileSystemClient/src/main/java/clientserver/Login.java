@@ -48,7 +48,7 @@ public class Login extends HttpServlet
 		Response_Login lResponse = new Response_Login();
 		lResponse = lResponse.getClassFromJsonString(reply);
 		
-		if(lResponse.getAuthstatus().equals("Y")&&lResponse.getUsertype().equals("N")) 
+		if(lResponse.getStatus().equals("Y")&&lResponse.getUser_type().equals("N")) 
 		{
 			request.getSession().setAttribute("fname", lResponse.getName());
 			request.getSession().setAttribute("token", lResponse.getToken());

@@ -8,59 +8,59 @@ public class FileInfoFromDSRequest
 
 	String token;
 	String filename;
-	String uname_Encrypted;
-	String Operatn;
+	String encryptedUsername;
+	String operation;
 	
-	public String getUname_Encrypted() 
-	{
-		return uname_Encrypted;
-	}
 	
-	public void setUname_Encrypted(String uname_Encrypted) 
-	{
-		this.uname_Encrypted = uname_Encrypted;
-	}
-	public String getOperatn() 
-	{
-		return Operatn;
-	}
-
-	public void setOperatn(String operatn) 
-	{
-		Operatn = operatn;
-	}
-
-	/**
-	 * @return the token
-	 */
-	public String getToken() 
-	{
+	
+	public String getToken() {
 		return token;
 	}
-	/**
-	 * @param token the token to set
-	 */
-	public void setToken(String token) 
-	{
+
+
+
+	public void setToken(String token) {
 		this.token = token;
 	}
-	/**
-	 * @return the filename
-	 */
-	public String getFilename() 
-	{
+
+
+
+	public String getFilename() {
 		return filename;
 	}
-	/**
-	 * @param filename the filename to set
-	 */
-	public void setFilename(String filename) 
-	{
+
+
+
+	public void setFilename(String filename) {
 		this.filename = filename;
 	}
-	
-	
-	
+
+
+
+	public String getEncryptedUsername() {
+		return encryptedUsername;
+	}
+
+
+
+	public void setEncryptedUsername(String encryptedUsername) {
+		this.encryptedUsername = encryptedUsername;
+	}
+
+
+
+	public String getOperation() {
+		return operation;
+	}
+
+
+
+	public void setOperation(String operation) {
+		this.operation = operation;
+	}
+
+
+
 	//Convert class to Json String
 	public String getJsonString() 
 	{

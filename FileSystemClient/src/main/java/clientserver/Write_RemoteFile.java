@@ -45,23 +45,23 @@ public class Write_RemoteFile extends HttpServlet
 		FileInfoFromDSRequest infoRequest = new FileInfoFromDSRequest();
 		infoRequest.setFilename(EncryptDecrypt.encrypt(filename, key1));
 		infoRequest.setToken(token);
-		infoRequest.setUname_Encrypted(usernameEnc);
-		infoRequest.setOperatn("w");
+		infoRequest.setEncryptedUsername(usernameEnc);
+		infoRequest.setOperation("w");
 		String infoRequestJson = infoRequest.getJsonString();
 		String replyInfoRequest = sf.getDirectoryInfo(infoRequestJson);
 		FileInfoFromDSResponse fileInfoResponse = new FileInfoFromDSResponse();
 		fileInfoResponse=fileInfoResponse.getClassFromJsonString(replyInfoRequest);
 		
-		if(fileInfoResponse.getAuthStatus().equals("Y"))
+		if(fileInfoResponse.getAuthstatus().equals("Y"))
 		{
-			fileInfoResponse.setServer_IP(EncryptDecrypt.decrypt(fileInfoResponse.getServer_IP(),key1));
+			fileInfoResponse.setServerurl(EncryptDecrypt.decrypt(fileInfoResponse.getServerurl(),key1));
 			Request_Read readRequest = new Request_Read();
 			readRequest.setFilename(EncryptDecrypt.encrypt(filename, key1));
 			readRequest.setToken(token);
 			readRequest.setEncryptedUsername(usernameEnc);
 			readRequest.setDirectory(fileInfoResponse.getDirectory());//This is also encrypted with key1
 			String jsonReadRequest = readRequest.getJsonString();
-			String readResponsereply = sf.sendReadRequest(jsonReadRequest,fileInfoResponse.getServer_IP());
+			String readResponsereply = sf.sendReadRequest(jsonReadRequest,fileInfoResponse.getServerurl());
 			Response_Read readResponse = new Response_Read();
 			readResponse = readResponse.getClassFromJsonString(readResponsereply);
 			String filecontent = EncryptDecrypt.decrypt(readResponse.getFilecontent(),key1);
@@ -84,7 +84,7 @@ public class Write_RemoteFile extends HttpServlet
 				request.getSession().setAttribute("filecontent", filecontent);
 				request.getSession().setAttribute("filename", filename);
 				request.getSession().setAttribute("directory", EncryptDecrypt.decrypt(fileInfoResponse.getDirectory(),key1));
-				request.getSession().setAttribute("serverurl", fileInfoResponse.getServer_IP());
+				request.getSession().setAttribute("serverurl", fileInfoResponse.getServerurl());
 				System.out.println(filecontent);
 				request.getRequestDispatcher("writefileopen.jsp").forward(request, response);
 			}
@@ -94,8 +94,8 @@ public class Write_RemoteFile extends HttpServlet
 			{
 				System.out.println("Validation Failed");
 				request.getSession().setAttribute("status", "0");
-				if(fileInfoResponse.getAuthStatus()==null)
-				    fileInfoResponse.setAuthStatus("");
+				if(fileInfoResponse.getAuthstatus()==null)
+				    fileInfoResponse.setAuthstatus("");
 				request.getSession().setAttribute("message", "Unable to get lock on file, file is already locked");
 				request.getRequestDispatcher("writefileopen.jsp").forward(request, response);
 			} 
@@ -105,8 +105,8 @@ public class Write_RemoteFile extends HttpServlet
 			{
 				System.out.println("Validation Failed");
 				request.getSession().setAttribute("status", "0");
-				if(fileInfoResponse.getAuthStatus()==null)
-					fileInfoResponse.setAuthStatus("");
+				if(fileInfoResponse.getAuthstatus()==null)
+					fileInfoResponse.setAuthstatus("");
 				request.getSession().setAttribute("message", "Token Validation Failed");
 				request.getRequestDispatcher("writefileopen.jsp").forward(request, response);
 			}			
@@ -116,9 +116,9 @@ public class Write_RemoteFile extends HttpServlet
 		{
 			System.out.println("Validation Failed");
 			request.getSession().setAttribute("status", "0");
-			if(fileInfoResponse.getAuthStatus()==null)
-				fileInfoResponse.setAuthStatus("");
-			request.getSession().setAttribute("message", fileInfoResponse.getAuthStatus());
+			if(fileInfoResponse.getAuthstatus()==null)
+				fileInfoResponse.setAuthstatus("");
+			request.getSession().setAttribute("message", fileInfoResponse.getAuthstatus());
 			request.getRequestDispatcher("writefileopen.jsp").forward(request, response);
 		}
 	}

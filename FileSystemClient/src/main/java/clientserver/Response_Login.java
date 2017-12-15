@@ -7,9 +7,15 @@ public class Response_Login {
 
 	String name;
 	String token;
-	String authstatus;
-	String usertype;
+	String status;
+	String user_type;
 	String key1;
+	public final String getStatus() {
+		return status;
+	}
+	public final void setStatus(String status) {
+		this.status = status;
+	}
 	/**
 	 * @return the name
 	 */
@@ -35,30 +41,19 @@ public class Response_Login {
 		this.token = token;
 	}
 	
-	/**
-	 * @return the authstatus
-	 */
-	public String getAuthstatus() {
-		return authstatus;
-	}
-	/**
-	 * @param authstatus the authstatus to set
-	 */
-	public void setAuthstatus(String authstatus) {
-		this.authstatus = authstatus;
-	}
+	
 	
 	/**
 	 * @return the usertype
 	 */
-	public String getUsertype() {
-		return usertype;
+	public String getUser_type() {
+		return user_type;
 	}
 	/**
 	 * @param usertype the usertype to set
 	 */
-	public void setUsertype(String usertype) {
-		this.usertype = usertype;
+	public void setUser_type(String user_type) {
+		this.user_type = user_type;
 	}
 	/**
 	 * @return the key1

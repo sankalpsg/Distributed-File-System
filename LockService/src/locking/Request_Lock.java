@@ -6,7 +6,7 @@ import com.google.gson.GsonBuilder;
 
 public class Request_Lock {
 
-	String uname;
+	String username;
 	String filename;
 	String token;
 	String email;
@@ -16,18 +16,14 @@ public class Request_Lock {
 	/**
 	 * @return the uname
 	 */
-	public String getUname() {
-		return uname;
+	public String getUsername() {
+		return username;
 	}
-	/**
-	 * @input uname the uname to set
-	 */
-	public void setUname(String uname) {
-		this.uname = uname;
+	
+	public void setUsername(String username) {
+		this.username = username;
 	}
-	/**
-	 * @return the filename
-	 */
+
 	public String getFilename() {
 		return filename;
 	}

@@ -50,7 +50,7 @@ public class Write_Changes extends HttpServlet
 		writeResponse = writeResponse.getClassFromJsonString(writeResponsereply);
 		
 		//Success case
-		if(null!=writeResponse.getAuthStatus() && writeResponse.getAuthStatus().equals("Y")) 
+		if(null!=writeResponse.getAuthstatus() && writeResponse.getAuthstatus().equals("Y")) 
 		{
 			request.getSession().setAttribute("status", "1");
 			request.getSession().setAttribute("message", "File Changes saved");
@@ -59,7 +59,7 @@ public class Write_Changes extends HttpServlet
 		}
 		
 		//Token Validation Failed
-		else if(null!=writeResponse.getAuthStatus() && writeResponse.getAuthStatus().equals("N")) 
+		else if(null!=writeResponse.getAuthstatus() && writeResponse.getAuthstatus().equals("N")) 
 		{
 			request.getSession().setAttribute("status", "0");
 			request.getSession().setAttribute("message", "Token Validation Failed, please re-login and try again");

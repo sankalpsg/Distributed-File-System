@@ -5,27 +5,24 @@ import com.google.gson.GsonBuilder;
 
 public class Response_Write 
 {
-	String authStatus;
-	String fileStatus;
+	String authstatus;
+	String filestatus;
 	
-	public String getAuthStatus() 
-	{
-		return authStatus;
+
+	public String getAuthstatus() {
+		return authstatus;
 	}
 
-	public void setAuthStatus(String authStatus) 
-	{
-		this.authStatus = authStatus;
+	public void setAuthstatus(String authstatus) {
+		this.authstatus = authstatus;
 	}
 
-	public String getFileStatus() 
-	{
-		return fileStatus;
+	public String getFilestatus() {
+		return filestatus;
 	}
 
-	public void setFileStatus(String fileStatus) 
-	{
-		this.fileStatus = fileStatus;
+	public void setFilestatus(String filestatus) {
+		this.filestatus = filestatus;
 	}
 
 	public String getJsonString() 

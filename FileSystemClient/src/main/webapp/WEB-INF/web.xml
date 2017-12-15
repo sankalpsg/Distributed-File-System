@@ -8,25 +8,25 @@
   	<servlet-name>Login</servlet-name>
   	<display-name>Login</display-name>
   	<description></description>
-  	<servlet-class>com.filesystem.Login</servlet-class>
+  	<servlet-class>clientserver.Login</servlet-class>
   </servlet>
   <servlet>
   	<servlet-name>ReadRemoteFile</servlet-name>
   	<display-name>ReadRemoteFile</display-name>
   	<description></description>
-  	<servlet-class>com.filesystem.ReadRemoteFile</servlet-class>
+  	<servlet-class>clientserver.Read_RemoteFile</servlet-class>
   </servlet>
   <servlet>
   	<servlet-name>WriteRemoteFile</servlet-name>
   	<display-name>WriteRemoteFile</display-name>
   	<description></description>
-  	<servlet-class>com.filesystem.WriteRemoteFile</servlet-class>
+  	<servlet-class>clientserver.Write_RemoteFile</servlet-class>
   </servlet>
     <servlet>
   	<servlet-name>SendChangesForWrite</servlet-name>
   	<display-name>SendChangesForWrite</display-name>
   	<description></description>
-  	<servlet-class>com.filesystem.SendChangesForWrite</servlet-class>
+  	<servlet-class>clientserver.Write_Changes</servlet-class>
   </servlet>
   <servlet-mapping>
   	<servlet-name>Login</servlet-name>
