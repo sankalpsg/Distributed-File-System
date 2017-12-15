@@ -1,6 +1,5 @@
 # Distributed-File-System
-<br>Assignment 3<br>
-Distributed-File-System<br>
+<br>Distributed-File-System<br>
 Task 3<br><br>
 
 Components Implemented:<br>
