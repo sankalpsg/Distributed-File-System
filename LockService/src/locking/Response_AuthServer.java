@@ -5,18 +5,19 @@ import com.google.gson.GsonBuilder;
 
 public class Response_AuthServer {
 
-	String authstatus;
+	String status;
 	String key1;
 
 
-	public String getAuthstatus() {
-		return authstatus;
+
+
+	public String getStatus() {
+		return status;
 	}
 
 
-
-	public void setAuthstatus(String authstatus) {
-		this.authstatus = authstatus;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 

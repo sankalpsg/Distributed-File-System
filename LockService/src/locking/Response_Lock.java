@@ -7,28 +7,28 @@ public class Response_Lock {
 	
 	String token;
 	String encryptedUsername;
-	/**
-	 * @return the token
-	 */
-	
+
+		
 	public String getToken() {
 		return token;
 	}
-	/**
-	 * @param token the token to set
-	 */
+
+
 	public void setToken(String token) {
 		this.token = token;
 	}
-	
+
+
 	public String getEncryptedUsername() {
 		return encryptedUsername;
 	}
 
-	public void setEncrypted_Username(String encryptedUsername) {
+
+	public void setEncryptedUsername(String encryptedUsername) {
 		this.encryptedUsername = encryptedUsername;
 	}
-	
+
+
 	public String getJsonString()
 	{
 		Gson gson = new GsonBuilder().disableHtmlEscaping().create(); 

@@ -5,20 +5,21 @@ import com.google.gson.GsonBuilder;
 
 public class Response_Client {
 
-	String writestatus;
+	String lockstatus;
 	String authstatus;
 	String releasestatus; 
 	
 	
 
-	public String getWritestatus() {
-		return writestatus;
+
+	public String getLockstatus() {
+		return lockstatus;
 	}
 
 
 
-	public void setWritestatus(String writestatus) {
-		this.writestatus = writestatus;
+	public void setLockstatus(String lockstatus) {
+		this.lockstatus = lockstatus;
 	}
 
 

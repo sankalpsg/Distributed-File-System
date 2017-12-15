@@ -33,7 +33,7 @@ public class LockServer
 		
 		Response_Lock lresponse = new Response_Lock();
 		lresponse.setToken(client_token);
-		lresponse.setEncrypted_Username(client_username);
+		lresponse.setEncryptedUsername(client_username);
 		String jsonstr = lresponse.getJsonString();
 		ConnectingAuthServer con = new ConnectingAuthServer();
 		
@@ -53,7 +53,7 @@ public class LockServer
 		
 	
 
-		String auth = rfas.getAuthstatus();
+		String auth = rfas.getStatus();
 		Connection conn = ConnectionDao.sqlconnect();
 		Response_Client rtc = new Response_Client();
 		
@@ -70,7 +70,7 @@ public class LockServer
 			{
 				if(rs.getString(1).equals("Y")) // If the file is locked.
 				{
-					rtc.setWritestatus("N");
+					rtc.setLockstatus("N");
 					
 					reply= rtc.getJsonString();
 					
@@ -80,7 +80,7 @@ public class LockServer
 					String query = "update lookup set locked = 'Y' where filename = '" + decrypt_client_filename +"';  ";
 			        PreparedStatement preparedStmt = conn.prepareStatement(query);
 			        preparedStmt.execute();
-			        rtc.setWritestatus("Y");
+			        rtc.setLockstatus("Y");
 			        reply=  rtc.getJsonString();
 				}
 				
@@ -93,7 +93,7 @@ public class LockServer
 		        preparedStmt.setString (2, decrypt_client_filename);
 		        preparedStmt.setString (3, decrypt_client_email);
 		        preparedStmt.execute();
-		        rtc.setWritestatus("Y");
+		        rtc.setLockstatus("Y");
 		        reply=  rtc.getJsonString();
 				
 			}
@@ -143,7 +143,7 @@ public class LockServer
 		
 		Response_Lock lresponse = new Response_Lock();
 		lresponse.setToken(client_token);
-		lresponse.setEncrypted_Username(client_username);
+		lresponse.setEncryptedUsername(client_username);
 		String jsonstr = lresponse.getJsonString();
 		ConnectingAuthServer cas = new ConnectingAuthServer();
 		
@@ -155,7 +155,7 @@ public class LockServer
 		
 		try {
 						
-			String auth = rfas.getAuthstatus();
+			String auth = rfas.getStatus();
 			Connection conn = ConnectionDao.sqlconnect();
 			Response_Client rtc = new Response_Client();
 			if (auth.equals("Y"))

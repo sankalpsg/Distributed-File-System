@@ -15,7 +15,7 @@ public class ConnectionDao
 	{
 		Class.forName("com.mysql.jdbc.Driver");
 	    connect=DriverManager.getConnection(  
-				"jdbc:mysql://localhost:3306/loginserver","root","Dublin12*");
+				"jdbc:mysql://localhost:3306/lockservice","root","Dublin12*");
 	} 
 	
 	catch (ClassNotFoundException e) 
