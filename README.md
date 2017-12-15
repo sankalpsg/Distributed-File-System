@@ -1,27 +1,27 @@
 # Distributed-File-System
-Assignment 3
-Distributed-File-System
-Task 3
+<br>Assignment 3<br>
+Distributed-File-System<br>
+Task 3<br><br>
 
-Components Implemented:
+Components Implemented:<br>
 
-  1)Login Authentication: Kerberos
-  2)Distributed Transparent File Access (Client)
-  3)Directory Service
-  4)Locking
-  5)Caching
+  1)Login Authentication: Kerberos<br>
+  2)Distributed Transparent File Access (Client)<br>
+  3)Directory Service<br>
+  4)Locking<br>
+  5)Caching<br><br>
 
-Dependencies: 
+Dependencies: <br><br>
 
-  1) Java version:1.8 jdk
-  2) Eclipse IDE Version: Oxygen.1 Release (4.7.1)
-  3) MySql Workbench
-  4) RestFul Jars
-  5) Server: Apache Tomcat 9.0
+  1) Java version:1.8 jdk<br>
+  2) Eclipse IDE Version: Oxygen.1 Release (4.7.1)<br>
+  3) MySql Workbench<br>
+  4) RestFul Jars<br>
+  5) Server: Apache Tomcat 9.0<br>
 
 
 
-PROCESS:
+PROCESS:<br><br>
 
 Security : 3 Key Mutual Identification process. 
 
@@ -43,8 +43,8 @@ When the lock server sends a success status, it then requests the FSS to write t
 When the file is done writing by some client and and a lock release request is given to the Lock Server, first it checks the status and verifies the token with the Authetication Server. Then eventually,it sends the response to the client.
 
 
-DETAILS
+DETAILS<br><br>
 
-  Name: Sankalp Gupta
-  Student ID: 17302431
-  Email ID: guptasa@tcd.ie
+  Name: Sankalp Gupta<br>
+  Student ID: 17302431<br>
+  Email ID: guptasa@tcd.ie<br>
