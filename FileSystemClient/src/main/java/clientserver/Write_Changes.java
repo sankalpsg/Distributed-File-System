@@ -33,7 +33,7 @@ public class Write_Changes extends HttpServlet
 		String token = (String)request.getSession().getAttribute("token");
 		String key1 = (String)request.getSession().getAttribute("key1");
 		String usernameEnc = (String)request.getSession().getAttribute("usernamenc");
-		String filename = request.getParameter("fn");
+		String filename = (String)request.getSession().getAttribute("filename");
 		String directory = (String)request.getSession().getAttribute("directory");
 		String filecontent = (String)request.getParameter("writebox");
 		String serverurl = (String)request.getSession().getAttribute("serverurl");
@@ -73,6 +73,22 @@ public class Write_Changes extends HttpServlet
 			response.getWriter().append("Served at: ").append(request.getContextPath());
 			request.getRequestDispatcher("welcome.jsp").forward(request, response);
 		}
+		
+		 //Release Lock for file
+        ReleaseLock releaseLock = new ReleaseLock();
+        releaseLock.setEmail(EncryptDecrypt.encrypt("test@gmail.com", key1));
+        releaseLock.setFilename(EncryptDecrypt.encrypt(filename, key1));
+        releaseLock.setToken(token);
+        releaseLock.setUsername(usernameEnc);
+        String lockRequestStr = releaseLock.getJsonString();
+        sf.sendUnLockRequest(lockRequestStr);
+        
+        
+        String cacheFilename = CachingMemory.cacheStore.get(filename);
+        if(cacheFilename != null) 
+        {
+        	CachingMemory.cacheStore.put(filename, filecontent);
+        }
 
 	}
 

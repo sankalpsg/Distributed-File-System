@@ -14,6 +14,8 @@ public  class UrlProperty
 	public static String lockServerUrl;
 	public static String lockingUrl;
 	public static String cache_Time;
+	public static String fileServerUrl;
+	public static String unlockingUrl;
 
 	public static void import_Properties() 
 	{
@@ -27,17 +29,18 @@ public  class UrlProperty
 			directoryServerUrl = config.getProperty("directoryServerUrl");
 			loginUrl = config.getProperty("loginUrl");
 			readfileUrl = config.getProperty("readfileUrl");
-			directoryinfo_Url = config.getProperty("directoryinfo_Url");
+			directoryinfo_Url = config.getProperty("directoryinfoUrl");
 			writefileUrl = config.getProperty("writefileUrl");
 			cache_Time = config.getProperty("cache_Time");
 			lockServerUrl = config.getProperty("lockServerUrl");
 			lockingUrl = config.getProperty("lockingUrl");
-			
+			fileServerUrl = config.getProperty("fileServerUrl");
+			unlockingUrl = config.getProperty("unlockingUrl");
 		} 
 		
 		catch (IOException e) 
 		{
-			System.out.println("Failed to import the property file"+e);
+			System.out.println("Failed to import the property file"+e);;
 		}
 	}
 }

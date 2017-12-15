@@ -7,55 +7,48 @@ public class Request_Login
 {
 
 	String filename;
-	String uname;
-	String passwd;
+	String username;
+	String password;
 	
-    // Getter Setter Methods
+   
 
-	/**
-	 * @return the filename
-	 */
+	// Convert from Json String to Class
+
 	public String getFilename() {
 		return filename;
 	}
 
-	/**
-	 * @param filename the filename to set
-	 */
+
+
 	public void setFilename(String filename) {
 		this.filename = filename;
 	}
 
-	/**
-	 * @return the uname
-	 */
-	public String getUname() {
-		return uname;
-	}
 
-	/**
-	 * @param uname the uname to set
-	 */
-	public void setUname(String uname) {
-		this.uname = uname;
-	}
 
-	/**
-	 * @return the passwd
-	 */
-	public String getPasswd() {
-		return passwd;
-	}
-
-	/**
-	 * @param passwd the passwd to set
-	 */
-	public void setPasswd(String passwd) {
-		this.passwd = passwd;
+	public String getUsername() {
+		return username;
 	}
 
 
-	// Convert from Json String to Class
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+
+
+	public String getPassword() {
+		return password;
+	}
+
+
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
 
 	public Request_Login getClassFromJson(String param)
 	{

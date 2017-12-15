@@ -27,8 +27,8 @@ public class Server_Login
 		Request_Login lrequest = new Request_Login();
 		lrequest = lrequest.getClassFromJson(input);
 
-		String client_uname = lrequest.getUname();
-		String client_passwd = lrequest.getPasswd();
+		String client_uname = lrequest.getUsername();
+		String client_passwd = lrequest.getPassword();
 
 
 		Response_Login lresponse = new Response_Login();
@@ -49,14 +49,14 @@ public class Server_Login
 				if(rs.getString(4).equals(Cryption.decrypt(client_passwd, rs.getString(4))))
 				{
 					lresponse.setStatus("Y");
-					lresponse.setFullname(rs.getString(1));
+					lresponse.setName(rs.getString(1));
 					lresponse.setUser_type(rs.getString(2));
 					lresponse.setToken(rs.getString(3));
 					
 					 String key1 = Cryption.getInitialKey();
 					 String key2 = Cryption.getInitialKey();
 					 String time = String.valueOf(System.currentTimeMillis());
-					 String myToken = lresponse.getFullname() + ";;" + key1 + ";;" + time;
+					 String myToken = lresponse.getName() + ";;" + key1 + ";;" + time;
 					
 					 lresponse.setToken(Cryption.encrypt(myToken,key2));
 					 lresponse.setKey1(key1);
@@ -98,7 +98,7 @@ public class Server_Login
 		Request_Token tk_request = new Request_Token();
 		tk_request = tk_request.getClassFromJson(input);
 		
-		String client_uname = tk_request.getUserName_Encrypted();
+		String client_uname = tk_request.getEncryptedUsername();
 		String client_token = tk_request.getToken();
 		
 		System.out.println("username is "+client_uname);

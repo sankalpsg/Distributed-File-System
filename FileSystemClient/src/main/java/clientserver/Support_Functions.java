@@ -96,5 +96,12 @@ public class Support_Functions
 		String type = "GetLock";
 		return connection(url,input,type);
 	}
+	
+	public String sendUnLockRequest(String input) 
+	{
+		String url = UrlProperty.lockServerUrl+UrlProperty.unlockingUrl;
+		String type = "ReleaseLock";
+		return connection(url,input,type);
+	}
 
 }

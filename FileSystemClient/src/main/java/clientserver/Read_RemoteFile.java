@@ -72,6 +72,7 @@ public class Read_RemoteFile extends HttpServlet
 			infoRequest.setFilename(EncryptDecrypt.encrypt(filename, key1));
 			infoRequest.setToken(token);
 			infoRequest.setEncryptedUsername(encryptedUsername);
+			infoRequest.setOperation("r");
 			String infoRequestJson = infoRequest.getJsonString();
 			String replyInfoRequest = sf.getDirectoryInfo(infoRequestJson);
 			FileInfoFromDSResponse fileInfoResponse = new FileInfoFromDSResponse();
@@ -116,9 +117,7 @@ public class Read_RemoteFile extends HttpServlet
 		}
 	}
 	
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		doGet(request, response);
