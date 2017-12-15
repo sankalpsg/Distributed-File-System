@@ -53,7 +53,7 @@ public class Request_Handler
 			filename = EncryptDecrypt.decrypt(filename, checkResponse.getKey1());
 			directory = EncryptDecrypt.decrypt(directory, checkResponse.getKey1());
 			//Encrypt file content with key1 and return content
-			path = "C:\\Users\\Sankalp\\Desktop\\FileStorage\\"+directory+filename;
+			path = "C:\\Users\\Sankalp\\Desktop\\"+directory+filename;
 			String fcontent="";
 			try 
 			{
@@ -124,7 +124,7 @@ public class Request_Handler
 			directory = EncryptDecrypt.decrypt(directory, checkResponse.getKey1());
 			filecontent = EncryptDecrypt.decrypt(filecontent, checkResponse.getKey1());
 			//Encrypt file content with key1 and return content
-			path = "C:\\Users\\Sankalp\\Desktop\\FileStorage\\"+directory+filename;
+			path = "C:\\Users\\Sankalp\\Desktop\\"+directory+filename;
 			try 
 			{
 				Files.write(Paths.get(path), filecontent.getBytes());
