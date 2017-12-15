@@ -33,7 +33,7 @@ public class Request_Handler
 		String authCheckResponse = sf.sendAuthCheckRequest(authCheckRequest);
 		checkResponse = checkResponse.getClassFromJsonString(authCheckResponse);
 		
-		if(checkResponse.getAuthstatus().equals("Y")) 
+		if(checkResponse.getStatus().equals("Y")) 
 		{			
 				try 
 				{
@@ -93,7 +93,7 @@ public class Request_Handler
 		String authCheckRequest = checkReq.getJsonString();
 		String authCheckResponse = sf.sendAuthCheckRequest(authCheckRequest);
 		checkResponse = checkResponse.getClassFromJsonString(authCheckResponse);
-		if(checkResponse.getAuthstatus().equals("Y")) 
+		if(checkResponse.getStatus().equals("Y")) 
 		{
 			HashMap<String, String> fileList = sf.getCompleteFileList();
 			getCompleteInfoResponse.setFilenameArray(fileList.get("filename"));

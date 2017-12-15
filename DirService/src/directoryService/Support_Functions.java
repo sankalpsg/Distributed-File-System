@@ -39,6 +39,7 @@ public class Support_Functions
 			"?useSSL=false",
 			DatabaseProperties.dbusername,
 			DatabaseProperties.dbpassword);
+			System.out.println(con);
 		} 
 
 		catch (ClassNotFoundException e) 
@@ -152,12 +153,12 @@ public class Support_Functions
 				String query = " insert into dirservice.filelist values (?,?,?,?,?)";
 				PreparedStatement preparedStmt = conn.prepareStatement(query);
 				preparedStmt.setString (1, filename);
-				preparedStmt.setString (2, "http://127.0.0.1:8081/");
+				preparedStmt.setString (2, "http://127.0.0.1:8085/");
 				preparedStmt.setString (3, "N");
 				preparedStmt.setString (4, "");
 				preparedStmt.setString (5, "Sankalp\\");
 				preparedStmt.execute();
-				filestats.put("serverurl","http://127.0.0.1:8081/");
+				filestats.put("serverurl","http://127.0.0.1:8085/");
 				filestats.put("directory", "Sankalp\\");
 			}
 		} 
